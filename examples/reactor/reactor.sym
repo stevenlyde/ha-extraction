@@ -1,0 +1,36 @@
+(program
+ (while
+  true
+  (= t (index readTemp))
+  (index physical t)
+  (index assert_cps "(= dt 34)")
+  (cond
+   ((> t 1100)
+    (= x1 (index timeRod1Extracted))
+    (index assert_cps "(= dx1 1)")
+    (index physical x1)
+    (= x2 (index timeRod2Extracted))
+    (index assert_cps "(= dx2 1)")
+    (index physical x2)
+    (cond
+     ((>= x1 80)
+      (index insertRod1)
+      (index assert_cps "(= dt 25)")
+      (while
+       true
+       (= t (index readTemp))
+       (index physical t)
+       (cond ((<= t 250) (break))))
+      (index removeRod1)
+      (index set_physical "(= x1 0)"))
+     ((>= x2 80)
+      (index insertRod2)
+      (index assert_cps "(= dt 10)")
+      (while
+       true
+       (= t (index readTemp))
+       (index physical t)
+       (cond ((<= t 250) (break))))
+      (index removeRod2)
+      (index set_physical "(= x2 0)"))
+     (else (index assert_cps "(= dt 1)") (break)))))))

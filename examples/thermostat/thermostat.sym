@@ -1,0 +1,8 @@
+(program
+ (while
+  true
+  (= Tc (index readTemp))
+  (index physical Tc)
+  (cond
+   ((< Tc 30) (index heat true) (index assert_cps "(= dTc 4)"))
+   (else (index heat false) (index assert_cps "(= dTc -1)")))))
